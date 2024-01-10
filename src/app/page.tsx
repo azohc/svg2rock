@@ -20,7 +20,10 @@ export default function HomePage() {
       <section className='bg-white'>
         <div className='layout relative flex min-h-screen flex-col items-center justify-center py-12 text-center'>
           <h1>svg2rock</h1>
-          <p>load an svg to get started</p>
+          {/* <p>load an svg to get started</p>
+          <Dropzone /> */}
+          {/* TODO install THREEJS */}
+          {/* TODO load SVG with SVGLoader in THREEJS */}
         </div>
       </section>
     </main>
