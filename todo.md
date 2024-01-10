@@ -5,6 +5,9 @@
 use [this codepen](https://codepen.io/areknawo/pen/abWzjGO) and substitute the included SVG for j.svg
 more SVGLOADER info @ https://blog.logrocket.com/bringing-svgs-three-js-svgloader/
 
+> extrudability is sort of there
+> need a way to normalize position and scale, however
+
 # rockgen ii: rocky distort
 
 > ?

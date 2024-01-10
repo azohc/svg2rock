@@ -1,31 +1,44 @@
 import { useCallback } from 'react';
 import { useDropzone } from 'react-dropzone';
 
-export default function Dropzone() {
-  const onDrop = useCallback((acceptedFiles: Array<File>) => {
-    acceptedFiles.forEach((file: File) => {
-      const reader = new FileReader();
+export default function Dropzone({
+  onLoad,
+}: {
+  onLoad: (svg: string) => void;
+}) {
+  const onDrop = useCallback(
+    (acceptedFiles: Array<File>) => {
+      acceptedFiles.forEach((file: File) => {
+        const reader = new FileReader();
+        reader.onload = (e: ProgressEvent) => {
+          const svgString = (e.target as FileReader).result;
+          if (!svgString) {
+            // TODO handle, i.e. add onError?
+            return;
+          }
+          onLoad(svgString as string);
+        };
+        reader.readAsText(file);
+      });
+    },
+    [onLoad]
+  );
 
-      // reader.onabort = () => console.log('file reading was aborted');
-      // reader.onerror = () => console.log('file reading has failed');
-      reader.onload = () => {
-        // Do whatever you want with the file contents
-        // TODO parse svg
-        // const binaryStr = reader.result;
-        // console.log(binaryStr);
-      };
-      reader.readAsArrayBuffer(file);
-    });
-  }, []);
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
   return (
-    <div {...getRootProps()} className='rounded border px-4 py-2'>
+    <div
+      {...getRootProps()}
+      className='flex h-40 w-80 flex-col justify-center rounded border-4 border-dashed'
+    >
       <input {...getInputProps()} />
       {isDragActive ? (
-        <p>Drop the files here ...</p>
+        <p>¡drop the files here!</p>
       ) : (
-        <p>Drag 'n' drop some files here, or click to select files</p>
+        <p>
+          drag 'n' drop some files here <br />
+          <span className='text-xs'>...or click to select files</span>
+        </p>
       )}
     </div>
   );
